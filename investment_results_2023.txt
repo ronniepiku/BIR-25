@@ -1,0 +1,37 @@
+Company Name                                Ticker   Momentum Value
+----------------------------------------------------------------------------------
+International Personal Finance Plc           IPF     30.0%
+Bank Of Georgia Group Plc                    BGEO    28.999999999999996%
+HSBC Holdings plc                            HSBA    22.0%
+Kier Group plc                               KIE     21.0%
+Trifast                                      TRI     19.0%
+Barratt Developments plc                     BDEV    16.0%
+NewRiver REIT plc                            NRR     11.0%
+Vanquis Banking Group plc                    VANQ    9.0%
+Crest Nicholson Holdings plc                 CRST    8.0%
+TBC Bank Group Plc                           TBCG    8.0%
+Capital & Regional plc                       CAL     5.0%
+Lookers Plc                                  LOOK    5.0%
+Standard Chartered plc                       STAN    5.0%
+Paragon Banking Group plc                    PAG     4.0%
+Lancashire Holdings                          LRE     3.0%
+Palace Capital plc                           PCA     3.0%
+Lloyds Banking Group plc                     LLOY    2.0%
+M&G plc                                      MNG     2.0%
+OSB Group plc                                OSB     2.0%
+Redde Northgate plc                          REDD    1.0%
+Funding Circle PLC                           FCH     0.0%
+Metro Bank plc                               MTRO    0.0%
+Metro Bank plc                               MTRO    0.0%
+Middlefield Canadian Inc - GBP PC            MCT     N/A
+Bakkavor Group Plc                           BAKK    -1.0%
+Kingfisher                                   KGF     -1.0%
+Shell plc                                    SHEL    -2.0%
+Kenmare Resources plc                        KMR     -3.0%
+Phoenix Group Holdings Plc                   PHNX    -3.0%
+BP Plc                                       BP.     -4.0%
+Virgin Money UK plc                          VMUK    -4.0%
+Jupiter Fund Management PLC                  JUP     -5.0%
+Norcros plc                                  NXR     -5.0%
+Secure Trust Bank plc                        STB     -5.0%
+Barclays plc                                 BARC    -6.0%
