@@ -1,0 +1,9 @@
+.venv
+.idea
+.conda
+__pycache__
+investment_results
+investmentbotbackup
+proxies.txt
+proxy_rotator
+sa.json
