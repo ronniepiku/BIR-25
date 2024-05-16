@@ -2,8 +2,8 @@
 .idea
 .conda
 __pycache__
-investment_results
-investmentbotbackup
+investment_results_2023.txt
+investmentbotbackup.xlsx
 proxies.txt
-proxy_rotator
+proxy_rotator.py
 sa.json
