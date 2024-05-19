@@ -8,7 +8,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 
-
 def get_names(file_name, sh_name):
     # initialize global variables
     page = 1

@@ -157,7 +157,7 @@ def spreadsheet(file_name, sh_name):
     def calculate_sum():
         updates = []
 
-        for i, row in enumerate(all_values):
+        for i, row in enumerate(all_values[0:], start=0):
             values = [row[3], row[5], row[7], row[9], row[11], row[15]]
             row_sum = sum(float(value) for value in values)
 
@@ -169,7 +169,7 @@ def spreadsheet(file_name, sh_name):
         worksheet.batch_update(updates)
 
     def decile():
-        sort_rank = sorted(all_values, key=lambda x: float(x[16]) if x[16] != "n/a" else 0, reverse=True)
+        sort_rank = sorted(all_values, key=lambda x: float(x[16]) if x[16] and x[16] != "n/a" else 0, reverse=True)
         updates = []
         n = 60  # Number of values per score
         score = 1  # Initial score
@@ -187,16 +187,16 @@ def spreadsheet(file_name, sh_name):
 
     def result():
         nonlocal picks
-        sort_decile = sorted(all_values, key=lambda x: float(x[17]) if x[17] != "n/a" else 0)
+        sort_decile = sorted(all_values, key=lambda x: float(x[17]) if x[17] and x[17] != "n/a" else 0)
         decile_1 = [row for row in sort_decile if row[17] == '1.00']
-        sort_momentum = sorted(decile_1, key=lambda x: float(x[18]) if x[18] != "n/a" else 0, reverse=True)
+        sort_momentum = sorted(decile_1, key=lambda x: float(x[18]) if x[18] and x[18] != "n/a" else 0, reverse=True)
         temp_picks = sort_momentum[:35]
 
         for row in temp_picks:
             company_name = row[0]
             ticker = row[1]
             if row[18] != "n/a":
-                value_s = str(float(row[18].replace('%', '')) * 100) + '%'
+                value_s = str(float(row[18].replace('%', ''))) + '%'
             else:
                 value_s = "N/A"
             print(f"{company_name}, {ticker}, {value_s}")

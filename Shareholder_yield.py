@@ -18,7 +18,7 @@ def shareholder_yield(file_name, sh_name):
 
         # Loop through each row in the batch and update the cell values
         body = []
-        for i, row in enumerate(rows):
+        for i, row in enumerate(rows[1:], start=1):
             value_m = row[0]  # Column J
             value_n = row[1]  # Column K
 

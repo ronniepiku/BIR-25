@@ -12,10 +12,13 @@ def get_data(file_name, sh_name):
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument('--headless')
     driver = webdriver.Chrome(options=chrome_options)
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 60)
 
     # Navigate to the login page
     driver.get("https://www.stockopedia.com/auth/login/")
+
+    accept_cookies = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#cookie-banner__grant")))
+    accept_cookies.click()
 
     # Enter credentials and log in
     username = input("Please enter your username: ")
@@ -28,13 +31,13 @@ def get_data(file_name, sh_name):
     password_field.clear()
     password_field.send_keys(password)
 
-    login_button2 = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#auth_submit")))
+    login_button2 = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button[type='submit']")))
     login_button2.click()
 
     # Wait for the homepage to load
     wait.until(EC.url_contains("home"))
 
-    # Open the Investmentbot2023 sheet
+    # Open the gsheet
     gc = gspread.service_account(filename=file_name)
     sh = gc.open(sh_name)
 
@@ -51,6 +54,7 @@ def get_data(file_name, sh_name):
 
             elements_values = driver.find_elements(By.XPATH,
                                    "//div[@class='gr__col gr__col--shrink space-in-l-2']//span[@class='ng-star-inserted']")
+
             elements_momentum = driver.find_elements(By.XPATH,
                                     "//td[@class='align-r ng-star-inserted']//span[@class='ng-star-inserted']//span")
 
@@ -61,11 +65,15 @@ def get_data(file_name, sh_name):
                 ebitda_ev = 1 / float(elements_values[8].text.replace(',', ''))
 
             price_to_book_value = elements_values[4].text
-            print(price_to_book_value)
             price_to_earnings = elements_values[0].text
             price_to_sales = elements_values[7].text
             price_to_cashflow = elements_values[6].text
             momentum = elements_momentum[2].text
+
+            if momentum.strip() and momentum.strip() != 'n/a':
+                momentum = float(momentum.strip('%'))
+            else:
+                momentum = 'n/a'
 
             # Update worksheet with data
             sh.sheet1.update_cell(i + 2, 3, price_to_book_value)

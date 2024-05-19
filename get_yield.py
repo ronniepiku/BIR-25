@@ -15,20 +15,20 @@ def get_yield(file_name, sh_name):
 
     os.environ['PATH'] += r";C:\SeleniumDrivers"
     driver = webdriver.Chrome()
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 60)
 
     driver.get("https://www.google.co.uk/")
-    wait.until(EC.element_to_be_clickable((By.ID, "L2AGLb")))  # Wait for the element to be clickable
-    driver.find_element(By.ID, "L2AGLb").click()
+    accept_cookies = wait.until(EC.element_to_be_clickable((By.ID, "L2AGLb")))  # Wait for the element to be clickable
+    accept_cookies.click()
 
     # Google search for company and select first result
-    for i, company_name in enumerate(company_names):
+    for i, company_name in enumerate(company_names[403:], start=403):
         e = company_name.replace(' ', '+').replace('&', '%26')
         search_terms = ['"buyback"', '"yield"', '"fidelity"', f'{e}', tickers[i]]
         search_terms_str = '+'.join(search_terms)
         search_url = f'https://www.google.co.uk/search?q={search_terms_str}'
         driver.get(search_url)
-        time.sleep(1)
+        time.sleep(2)
 
         search_result_link = driver.find_elements(By.CLASS_NAME, "LC20lb.MBeuO.DKV0Md")
 
@@ -38,30 +38,41 @@ def get_yield(file_name, sh_name):
 
         for link in search_result_link:
             if "Share Dividends" in link.text:
-                link.click()
+                try:
+                    link.click()
+                except:
+                    print(f"Error clicking link {e}")
                 try:
                     cookies_button = driver.find_element(By.ID, "ensCloseBanner")
                     cookies_button.click()
                 except:
                     pass
 
+                wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "#yield-table tbody tr")))
+
                 dividend_yield = driver.find_elements(By.CSS_SELECTOR,
                                                       "#yield-table > tbody > tr:nth-child(1) > td:nth-child(2)")
                 buyback_yield = driver.find_elements(By.CSS_SELECTOR,
                                                      "#yield-table > tbody > tr:nth-child(1) > td:nth-child(3)")
 
-                if dividend_yield and dividend_yield[0].text != "-":
-                    dividend_yield_val = float(dividend_yield[0].text)
+                if dividend_yield and dividend_yield[0].text.strip() != "-" and dividend_yield[0].text.strip():
+                    try:
+                        dividend_yield_val = float(dividend_yield[0].text.strip())
+                    except ValueError:
+                        dividend_yield_val = "n/a"
                 else:
                     dividend_yield_val = "n/a"
 
-                if buyback_yield and buyback_yield[0].text != "-":
-                    buyback_yield_val = float(buyback_yield[0].text)
+                if buyback_yield and buyback_yield[0].text.strip() != "-" and buyback_yield[0].text.strip():
+                    try:
+                        buyback_yield_val = float(buyback_yield[0].text.strip())
+                    except ValueError:
+                        buyback_yield_val = "n/a"
                 else:
                     buyback_yield_val = "n/a"
 
-                print(dividend_yield_val)
-                print(buyback_yield_val)
+                # print(dividend_yield_val)
+                # print(buyback_yield_val)
                 break
 
         # Check if a captcha is displayed
